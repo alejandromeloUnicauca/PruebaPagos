@@ -29,7 +29,7 @@ namespace Prueba.Services
             try
             {
                 HttpClient httpClient = new HttpClient();
-                httpClient.Timeout = TimeSpan.FromSeconds(5);
+                httpClient.Timeout = TimeSpan.FromSeconds(10);
                 StringContent content = new StringContent("", Encoding.UTF8, "application/json");
                 string url = ConfigurationHelper.GetByName("apiPrueba");
                 HttpResponseMessage responseMessage = await httpClient.PostAsync(url, content);
