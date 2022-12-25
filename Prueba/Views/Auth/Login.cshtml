@@ -1,0 +1,55 @@
+﻿@model Prueba.DTOs.UserDTO
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login" onsubmit="showLoader()">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="tipo" class="control-label">Tipo de usuario</label>
+                @Html.DropDownListFor(m=>m.tipo, ViewBag.listItems as IEnumerable<SelectListItem>, new { @class = "form-control", @onChange = "onChangeSelected(this)" })
+            </div>
+            <div class="form-group">
+                <label asp-for="identificacion" id="lblIdentificacion" class="control-label">Identificación</label>
+                <input asp-for="identificacion" class="form-control" type="text" required/>
+                <span asp-validation-for="identificacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="password" class="control-label">Contraseña</label>
+                <input asp-for="password" class="form-control" type="password" required/>
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+            @{if (ViewData["MensajeErrorLogin"] != null)
+                {
+                    <div class="alert-danger">
+                        @ViewData["MensajeErrorLogin"]
+                    </div>
+                }
+            }
+            <div class="form-group">
+                <a href="@Url.Action("Registrarse", "Auth")" class="ml-2">Registrarse</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function onChangeSelected(ddlitem) {
+            var value = ddlitem.value;
+            if (value === "PERSONA")
+                document.getElementById("lblIdentificacion").innerHTML = "Identificación";
+            else
+                document.getElementById("lblIdentificacion").innerHTML = "Codigo de comercio";
+        }
+    </script>
+}

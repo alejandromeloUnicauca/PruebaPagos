@@ -1,0 +1,63 @@
+﻿@model Prueba.DTOs.TransComercioDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Codigo: @Model.transCodigo</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="transCodigo" />
+            <div class="form-group">
+                <label asp-for="transIdentificacion" class="control-label"></label>
+                <input asp-for="transIdentificacion" class="form-control" disabled/>
+                <span asp-validation-for="transIdentificacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="transUsuario" class="control-label"></label>
+                <input asp-for="transUsuario" class="form-control" disabled/>
+                <span asp-validation-for="transUsuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="transConcepto" class="control-label"></label>
+                <input asp-for="transConcepto" class="form-control" disabled/>
+                <span asp-validation-for="transConcepto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="transFecha" class="control-label"></label>
+                <input asp-for="transFecha" class="form-control" disabled/>
+                <span asp-validation-for="transFecha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="transEstado" class="control-label"></label>
+                <select asp-for="transEstado" class="form-control" asp-items="ViewBag.TransEstadoId"></select>
+                <span asp-validation-for="transEstado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="transMedioP" class="control-label"></label>
+                <select asp-for="transMedioP" class="form-control" asp-items="ViewBag.TransMediopId"></select>
+                <span asp-validation-for="transMedioP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="transTotal" class="control-label"></label>
+                <input asp-for="transTotal" class="form-control" type="number" />
+                <span asp-validation-for="transTotal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

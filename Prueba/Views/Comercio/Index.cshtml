@@ -1,0 +1,165 @@
+﻿@model Prueba.ViewModel.IndexComercioViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Pagos</h1>
+<h4>Total:@ViewBag.total</h4>
+<div>
+    <div class="form-group col-md-12">
+        @using (Html.BeginForm("search", "Comercio"))
+        {
+            <div class="row">
+                <div class="col-md-4" style="display:inline-block !important">
+                    <div class="col-md-2" style="display:inline-block !important">
+                        <label asp-for="filtro.filtro" style="margin:0;padding:0">Filtro:</label>
+                    </div>
+                    <div class="col-md-9" style="display:inline-block !important">
+                        @Html.DropDownListFor(m => m.filtro.filtro, ViewBag.listItems as IEnumerable<SelectListItem>, new { @class = "form-control d-flex", @onChange = "onChangeSelected(this)", id = "ddl" })
+                    </div>
+                </div>
+                <div id="usuario" class="col-md-3">
+                    <input asp-for="filtro.idUsuario" placeholder="Identificación" class="form-control" />
+                </div>
+                <div id="codigo" class="col-md-3">
+                    <input asp-for="filtro.codigo" placeholder="Codigo transaccion" class="form-control" />
+                </div>
+                <div id="fecha" class="row col-md-6">
+                    <div class="col-md-6">
+                        <label style="font-size:10px;margin:0;padding:0">Fecha Inicial:</label><input asp-for="filtro.fechaI" placeholder="Fecha Inicial" type="date" class="form-control" style="margin-left:0;padding-left:0" />
+                    </div>
+                    <div class="col-md-6">
+                        <label style="font-size:10px;margin:0;padding:0">Fecha Final:</label><input asp-for="filtro.fechaF" placeholder="Fecha Final" type="date" class="form-control" style="margin-left:0;padding-left:0" />
+                    </div>
+                </div>
+                <div class="col-md-2" style="height:60%">
+                    <input type="submit" value="Buscar" class="btn btn-primary" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@{if (!string.IsNullOrEmpty(Model.filtro.mensajeError))
+    {
+        <div class="alert-danger">
+            @Model.filtro.mensajeError
+        </div>
+    }
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.transacciones[0].transCodigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.transacciones[0].transFecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.transacciones[0].transIdentificacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.transacciones[0].transUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.transacciones[0].transConcepto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.transacciones[0].transEstado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.transacciones[0].transMedioP)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.transacciones[0].transTotal)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.transacciones)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.transCodigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.transFecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.transIdentificacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.transUsuario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.transConcepto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.transEstado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.transMedioP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.transTotal)
+                </td>
+                <td>
+                    @{if (!item.transEstado.Equals("Aprobada"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.transCodigo" class="btn btn-secondary">Edit</a>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    var dropdown = document.getElementById("ddl");
+    var value = dropdown.options[dropdown.selectedIndex].value;
+    if (value === "0") {
+        document.getElementById("usuario").style.display = "none";
+        document.getElementById("codigo").style.display = "none";
+        document.getElementById("fecha").style.display = "none";
+    }
+    if (value === "1") {
+        document.getElementById("codigo").style.display = "none";
+        document.getElementById("fecha").style.display = "none";
+        document.getElementById("usuario").style.display = "";
+    }
+    else if (value == "2") {
+        document.getElementById("codigo").style.display = "";
+        document.getElementById("fecha").style.display = "none";
+        document.getElementById("usuario").style.display = "none";
+    } else if (value == "3") {
+        document.getElementById("codigo").style.display = "none";
+        document.getElementById("fecha").style.display = "";
+        document.getElementById("usuario").style.display = "none";
+    }
+
+    function onChangeSelected(ddlitem) {
+        var value = ddlitem.value;
+        if (value === "0") {
+            document.getElementById("usuario").style.display = "none";
+            document.getElementById("codigo").style.display = "none";
+            document.getElementById("fecha").style.display = "none";
+        }
+        else if (value === "1") {
+            document.getElementById("codigo").style.display = "none";
+            document.getElementById("fecha").style.display = "none";
+            document.getElementById("usuario").style.display = "";
+        }
+        else if (value == "2") {
+            document.getElementById("codigo").style.display = "";
+            document.getElementById("fecha").style.display = "none";
+            document.getElementById("usuario").style.display = "none";
+        } else if (value == "3") {
+            document.getElementById("codigo").style.display = "none";
+            document.getElementById("fecha").style.display = "";
+            document.getElementById("usuario").style.display = "none";
+        }
+    }
+</script>

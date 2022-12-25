@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Prueba.DTOs.TransUsuarioDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Pagos</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear Pago</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.transCodigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.transFecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.transComercio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.transConcepto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.transEstado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.transMedioP)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.transTotal)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.transCodigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.transFecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.transComercio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.transConcepto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.transEstado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.transMedioP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.transTotal)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
